@@ -1,17 +1,25 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const path = require("path");
+const { logger } = require("./middleware/logger");
+const errorHandler = require("./middleware/errorHandler");
 
 const PORT = process.env.PORT | 3500;
-const path = require("path");
+const corsOptions = require("./config/corsOptions");
 
+// Initiate express app
 const app = express();
 
-// Allow server to look into public folder for assets
+// MIDDLEWARES
+app.use(logger);
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
 app.use("/", express.static(path.join(__dirname, "/public")));
 
-// Set up root routes with the root route handler
+// ROUTES
 app.use("/", require("./routes/root"));
-
-// Serve 404 page if no route was hit
 app.all("*", (req, res) => {
   const notFoundHtmlPage = path.join(__dirname, "views", "404.html");
 
@@ -25,5 +33,7 @@ app.all("*", (req, res) => {
     res.type("txt").send("404 Not Found");
   }
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
