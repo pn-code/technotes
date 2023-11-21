@@ -25,6 +25,7 @@ app.use("/", express.static(path.join(__dirname, "/public")));
 
 // ROUTES
 app.use("/", require("./routes/root"));
+app.use("/api/users", require("./routes/userRoutes"))
 app.all("*", (req, res) => {
   const notFoundHtmlPage = path.join(__dirname, "views", "404.html");
 
@@ -41,7 +42,7 @@ app.all("*", (req, res) => {
 
 app.use(errorHandler);
 
-mongoose.connection.once("OPEN", () => {
+mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
   app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
 });
