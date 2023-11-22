@@ -1,8 +1,10 @@
+import Navbar from "../components/Navbar"
+
 function Root() {
   return (
-    <>
-      Hello World
-    </>
+    <main>
+      <Navbar/>
+    </main>
   )
 }
 
