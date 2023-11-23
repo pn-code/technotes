@@ -1,7 +1,19 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "date-fns": "^2.30.0",
     "express": "^4.18.2",
+=======
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^8.0.1",
+    "mongoose-sequence": "^5.3.1",
+>>>>>>> 2ede7e6ed864939e8cdad6904e86be0afdb8828a
     "uuid": "^9.0.1"
   },
   "scripts": {

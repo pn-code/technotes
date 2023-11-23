@@ -1,4 +1,6 @@
+require("dotenv").config();
 const express = require("express");
+<<<<<<< HEAD
 const path = require("path");
 const PORT = process.env.PORT | 3500
 
@@ -14,12 +16,35 @@ app.use(logger);
 app.use(express.json());
 
 // Allow server to look into public folder for assets
+=======
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const path = require("path");
+const mongoose = require("mongoose");
+
+const { logger, logEvents } = require("./middleware/logger");
+const errorHandler = require("./middleware/errorHandler");
+const corsOptions = require("./config/corsOptions");
+const connectDB = require("./config/dbConnection");
+const PORT = process.env.PORT || 3500;
+
+// Initiate express app
+const app = express();
+
+connectDB();
+
+// MIDDLEWARES
+app.use(logger);
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
+>>>>>>> 2ede7e6ed864939e8cdad6904e86be0afdb8828a
 app.use("/", express.static(path.join(__dirname, "/public")));
 
-// Set up root routes with the root route handler
+// ROUTES
 app.use("/", require("./routes/root"));
-
-// Serve 404 page if no route was hit
+app.use("/api/users", require("./routes/userRoutes"))
+app.use("/api/notes", require("./routes/noteRoutes"))
 app.all("*", (req, res) => {
     const notFoundHtmlPage = path.join(__dirname, "views", "404.html");
 
@@ -34,4 +59,17 @@ app.all("*", (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
+app.use(errorHandler);
+
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
+  app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
+});
+
+mongoose.connection.on("error", (error) => {
+  const mongoErrorMessage = `${error.no}: ${error.code}\t${error.syscall}\t${error.hostname}`;
+  const mongoErrorFileName = "mongoErrLog.log";
+  console.log(error);
+
+  logEvents(mongoErrorMessage, mongoErrorFileName);
+});
