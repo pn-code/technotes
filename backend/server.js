@@ -1,22 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-<<<<<<< HEAD
-const path = require("path");
-const PORT = process.env.PORT | 3500
-
-const { logger } = require("./middleware/logger");
-
-// Initiate our express server
-const app = express();
-
-// Allow server to write logs
-app.use(logger);
-
-// Allow server to parse json in the body
-app.use(express.json());
-
-// Allow server to look into public folder for assets
-=======
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
@@ -38,7 +21,6 @@ app.use(logger);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
->>>>>>> 2ede7e6ed864939e8cdad6904e86be0afdb8828a
 app.use("/", express.static(path.join(__dirname, "/public")));
 
 // ROUTES
