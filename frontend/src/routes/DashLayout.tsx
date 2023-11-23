@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import DashHeader from "../features/dashboard/DashHeader";
+import DashHeader from "../components/dashboard/DashHeader";
 
 export default function DashLayout() {
   return (

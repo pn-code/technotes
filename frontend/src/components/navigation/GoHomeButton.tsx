@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
+import Button from "../ui/Button";
 import { LucideHome } from "lucide-react";
 
 export default function GoHomeButton() {
