@@ -26,6 +26,7 @@ app.use("/", express.static(path.join(__dirname, "/public")));
 // ROUTES
 app.use("/", require("./routes/root"));
 app.use("/api/users", require("./routes/userRoutes"))
+app.use("/api/notes", require("./routes/noteRoutes"))
 app.all("*", (req, res) => {
   const notFoundHtmlPage = path.join(__dirname, "views", "404.html");
 
