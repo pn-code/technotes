@@ -27,9 +27,10 @@ export default function UsersList() {
     const { ids } = users;
 
     content = (
-      <ul>
+      <ul className="flex flex-col gap-2 p-2">
+        <h2 className="text-xl font-semibold">Users List</h2>
         {ids.map((userId: string) => (
-          <UserCard key={userId} user={users.entities[userId]} />
+          <UserCard key={userId} userId={userId} />
         ))}
       </ul>
     );
