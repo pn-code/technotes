@@ -27,9 +27,10 @@ export default function NotesList() {
     const { ids } = notes;
 
     content = (
-      <ul>
+      <ul className="w-full p-2 flex flex-col gap-2">
+        <h1 className="text-xl font-semibold">Notes List</h1>
         {ids.map((noteId: string) => (
-          <NoteCard key={noteId} note={notes.entities[noteId]} />
+          <NoteCard key={noteId} noteId={noteId} />
         ))}
       </ul>
     );
