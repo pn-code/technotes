@@ -1,6 +1,6 @@
 export default function Welcome() {
   return (
-    <div className='p-4 md:p-8'>
+    <div className='p-2'>
       Welcome to TechNotes
     </div>
   )
