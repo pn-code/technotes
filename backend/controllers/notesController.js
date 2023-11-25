@@ -24,7 +24,7 @@ const createNewNote = asyncHandler(async (req, res) => {
   if (!user || !title || !text) {
     return res.status(400).json({ message: "All fields are required." });
   }
-
+  console.log(Note)
   const note = await Note.create({ user, title, text });
 
   if (note) {
