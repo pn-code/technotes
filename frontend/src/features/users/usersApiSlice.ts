@@ -9,7 +9,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getUsers: builder.query({
             query: () => "/api/users",
-            keepUnusedDataFor: 5,
             transformResponse: (responseData: any[]) => {
                 const loadedUsers = responseData.map((user) => {
                     user.id = user._id;
