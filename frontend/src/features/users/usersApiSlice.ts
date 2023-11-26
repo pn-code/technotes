@@ -61,7 +61,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetUsersQuery } = usersApiSlice;
+export const {
+    useGetUsersQuery,
+    useCreateNewUserMutation,
+    useUpdateUserMutation,
+    useDeleteUserMutation,
+} = usersApiSlice;
 
 // returns the query result object
 export const selectUsersResult = usersApiSlice.endpoints.getUsers.select("");
