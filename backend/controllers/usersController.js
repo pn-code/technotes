@@ -51,6 +51,8 @@ const createNewUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const { id, username, roles, active, password } = req.body;
 
+  console.log("hit");
+  console.log(req.body)
   if (
     !id ||
     !username ||
@@ -69,7 +71,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
   const duplicate = await User.findOne({ username }).lean().exec();
 
-  if (duplicate && duplicate?.id.toString() !== id) {
+  if (duplicate && duplicate?._id != id) {
     return res.status(409).json({ message: "Duplicate username" });
   }
 
