@@ -4,10 +4,12 @@
 
 @layer components {
   label {
-    @apply text-slate-700 font-semibold mt-2 mb-1
+    @apply text-slate-700 font-semibold mt-2 mb-1;
   }
-  
-  input {
-    @apply border-2 border-slate-600 w-full md:w-52 px-1 py-0.5 rounded-sm outline-none;
+
+  input,
+  textarea,
+  select {
+    @apply border-2 border-slate-500 w-full md:w-72 px-1 py-0.5 rounded-sm outline-none;
   }
 }
