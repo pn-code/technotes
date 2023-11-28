@@ -8,10 +8,6 @@ const User = require("../models/User");
 const getAllNotes = asyncHandler(async (req, res) => {
   const notes = await Note.find().lean();
 
-  if (!notes?.length) {
-    return res.status(400).json({ message: "No notes found" });
-  }
-
   res.json(notes);
 });
 
@@ -24,7 +20,7 @@ const createNewNote = asyncHandler(async (req, res) => {
   if (!user || !title || !text) {
     return res.status(400).json({ message: "All fields are required." });
   }
-  console.log(Note)
+  console.log(Note);
   const note = await Note.create({ user, title, text });
 
   if (note) {
@@ -39,6 +35,7 @@ const createNewNote = asyncHandler(async (req, res) => {
 // @access Private
 const updateNote = asyncHandler(async (req, res) => {
   const { id, title, text, completed } = req.body;
+  console.log("hit");
 
   if (!id || !title || !text || typeof completed !== "boolean") {
     return res.status(400).json({ message: "All fields are required." });
@@ -69,13 +66,11 @@ const deleteNote = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Note ID Required" });
   }
 
-  const note = await Note.findOne({ user: id }).lean().exec();
+  const note = await Note.findByIdAndDelete(id)
 
   if (!note) {
     return res.status(400).json({ message: "Note not found" });
   }
-
-  await note.deleteOne();
 
   const response = `Note titled ${note.title} with ID ${note._id} deleted.`;
 
