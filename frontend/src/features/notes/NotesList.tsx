@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import Button from "../../components/ui/Button";
 import NoteCard from "./NoteCard";
 import { useGetNotesQuery } from "./notesApiSlice";
 
@@ -32,7 +34,13 @@ export default function NotesList() {
 
     content = (
       <ul className="w-full p-2 flex flex-col gap-2">
-        <h1 className="text-xl font-semibold">Notes List</h1>
+        <header className="flex justify-between items-center">
+          <h1 className="text-xl font-semibold">Notes List</h1>
+          <Button>
+            <Link to="new">Create Note</Link>
+          </Button>
+        </header>
+
         {ids.map((noteId: string) => (
           <NoteCard key={noteId} noteId={noteId} />
         ))}

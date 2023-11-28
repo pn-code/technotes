@@ -34,7 +34,7 @@ export default function UsersList() {
 
     content = (
       <ul className="flex flex-col gap-2 p-2">
-        <header className="flex justify-between">
+        <header className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">Users List</h2>
           <Button>
             <Link to="new">Create User</Link>
