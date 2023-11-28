@@ -10,7 +10,7 @@ export default function EditNote() {
   const note = useSelector((state) =>
     selectNoteById(state, id as string)
   ) as Note;
-  const users = useSelector(selectAllUsers) as Users[];
+  const users = useSelector(selectAllUsers) as User[];
 
   return note && users ? (
     <EditNoteForm users={users} note={note} />

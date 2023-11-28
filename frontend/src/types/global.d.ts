@@ -12,5 +12,9 @@ interface Note {
   text: string;
   completed: boolean;
   createdAt: string;
-  updatedAt: string
+  updatedAt: string;
+}
+
+interface RoleOption {
+  value: string;
 }

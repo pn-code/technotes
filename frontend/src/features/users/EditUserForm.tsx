@@ -58,24 +58,25 @@ export default function EditUserForm({ user }: EditUserFormProps) {
     }
   }, [isUpdateSuccess, isDeleteSuccess, navigate]);
 
-  const onUsernameChanged = (e) => setUsername(e.target.value);
-  const onPasswordChanged = (e) => setPassword(e.target.value);
+  const onUsernameChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setUsername(e.target.value);
+  const onPasswordChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setPassword(e.target.value);
 
-  const onRolesChanged = (e) => {
+  const onRolesChanged = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const values = Array.from(
       e.target.selectedOptions,
-      (option) => option.value
+      (option: RoleOption) => option.value
     );
     setRoles(values);
   };
 
   const onActiveChanged = () => setActive((prev) => !prev);
 
-  const onUpdateUserClicked = async (e) => {
+  const onUpdateUserClicked = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password) {
-        console.log("hit")
       await updateUser({
         id: user.id,
         username,
@@ -84,7 +85,6 @@ export default function EditUserForm({ user }: EditUserFormProps) {
         active,
       });
     } else {
-      console.log({ id: user.id, username, roles, active });
       await updateUser({ id: user.id, username, roles, active });
     }
   };
@@ -100,8 +100,7 @@ export default function EditUserForm({ user }: EditUserFormProps) {
       [roles.length, validUsername].every(Boolean) && !isUpdateLoading;
   }
 
-  const onDeleteUserClicked = async (e) => {
-    e.preventDefault();
+  const handleDeleteUserClicked = async () => {
     deleteUser({ id: user.id });
   };
 
@@ -121,17 +120,33 @@ export default function EditUserForm({ user }: EditUserFormProps) {
     );
   });
 
+  const getErrorMsg = (selectedError: any) => {
+    const errorObj = selectedError as any;
+    return errorObj.data.message;
+  };
+
   return (
     <div className="p-2">
-      <p className={errorStyles}>
-        {updateError?.data?.message || deleteError?.data?.message}
-      </p>
+      <p className={errorStyles}>{getErrorMsg(updateError)}</p>
+      <p className={errorStyles}>{getErrorMsg(deleteError)}</p>
 
       <form className="flex flex-col" onSubmit={onUpdateUserClicked}>
         <div className="flex justify-between item-center">
           <h2 className="text-xl font-semibold">Edit User</h2>
-          <div>
-            <Button disabled={!canUpdate}>Update</Button>
+          <div className="flex gap-2">
+            <Button
+              type="submit"
+              disabled={!canUpdate || isDeleteLoading || isUpdateLoading}
+            >
+              Update
+            </Button>
+            <Button
+              type="button"
+              onClick={handleDeleteUserClicked}
+              disabled={isDeleteLoading || isUpdateLoading}
+            >
+              Delete
+            </Button>
           </div>
         </div>
 

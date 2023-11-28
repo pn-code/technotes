@@ -50,27 +50,21 @@ export default function EditNoteForm({ users, note }: EditNoteFormProps) {
 
   useEffect(() => {
     setValidTitle(validateInput(title));
-  }, [title]);
+  }, [title, validateInput]);
 
   useEffect(() => {
     setValidText(validateInput(text));
-  }, [text]);
+  }, [text, validateInput]);
 
   useEffect(() => {
     setValidUser(validateUser(user));
-  }, [user]);
+  }, [user, validateUser]);
 
   useEffect(() => {
-    if (isUpdateSuccess) {
+    if (isUpdateSuccess || isDeleteSuccess) {
       navigate("/dashboard/notes");
     }
-  }, [navigate, isUpdateSuccess]);
-
-  useEffect(() => {
-    if (isDeleteSuccess) {
-      navigate("/dashboard/notes");
-    }
-  }, [navigate, isDeleteSuccess]);
+  }, [navigate, isUpdateSuccess, isDeleteSuccess]);
 
   const handleTitleOnChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setTitle(e.target.value);
@@ -79,6 +73,7 @@ export default function EditNoteForm({ users, note }: EditNoteFormProps) {
   const handleUserOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setUser(e.target.value);
   };
+
   const handleCompletedOnChange = () => setCompleted((prev) => !prev);
 
   const handleUpdateNote = async (e: React.FormEvent) => {
@@ -115,11 +110,16 @@ export default function EditNoteForm({ users, note }: EditNoteFormProps) {
   const textStyles = validText ? "border-blue-600" : "border-red-600";
   const userStyles = validUser ? "border-blue-600" : "border-red-600";
 
-  console.log("delete success", isDeleteSuccess);
+  const getErrorMsg = (selectedError: any) => {
+    const errorObj = selectedError as any;
+    return errorObj.data.message;
+  };
+
   return (
     <div className="p-2">
-      <p className={errorStyles}>{updateError?.data?.message}</p>
-      <p className={errorStyles}>{deleteError?.data?.message}</p>
+      <p className={errorStyles}>{getErrorMsg(updateError)}</p>
+      <p className={errorStyles}>{getErrorMsg(deleteError)}</p>
+      
       <form onSubmit={handleUpdateNote} className="flex flex-col">
         <header className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">Edit Note</h2>

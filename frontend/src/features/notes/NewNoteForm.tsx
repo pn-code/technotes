@@ -61,7 +61,7 @@ export default function NewNoteForm({ users }: NewNoteFormProps) {
 
   const handleCreateNewNote = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Can Save: ", canSave)
+    console.log("Can Save: ", canSave);
     if (canSave) {
       await createNote({ user, title, text });
     }
@@ -83,13 +83,21 @@ export default function NewNoteForm({ users }: NewNoteFormProps) {
   const textStyles = validText ? "border-blue-600" : "border-red-600";
   const userStyles = validUser ? "border-blue-600" : "border-red-600";
 
+  const getErrorMsg = (selectedError: any) => {
+    const errorObj = selectedError as any;
+    return errorObj.data.message;
+  };
+
   return (
     <div className="p-2">
-      <p className={errorStyles}>{error?.data?.message}</p>
+      <p className={errorStyles}>{getErrorMsg(error)}</p>
+      
       <form onSubmit={handleCreateNewNote} className="flex flex-col">
         <header className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">New Note</h2>
-          <Button type="submit" disabled={!canSave || isLoading}>Save</Button>
+          <Button type="submit" disabled={!canSave || isLoading}>
+            Save
+          </Button>
         </header>
 
         <label htmlFor="title">Title: </label>
