@@ -23,7 +23,7 @@ export default function Button({
             aria-label={ariaLabel}
             className={
                 className ||
-                "py-1.5 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 ease-linear duration-100"
+                "py-1.5 px-4 disabled:bg-indigo-600/30 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 ease-linear duration-100"
             }
             onClick={onClick}
             disabled={disabled}

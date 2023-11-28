@@ -66,22 +66,22 @@ export default function NewUserForm() {
         );
     });
 
-    const errorStyles = isError ? "text-red-600" : "hidden";
-    const validUserStyles = validUsername ? "hidden" : "text-red-600";
-    const validPasswordStyles = validPassword ? "hidden" : "text-red-600";
-    const validRolesStyles = roles.length ? "hidden" : "text-red-600";
+    const errorStyles = isError ? "border-red-600" : "border-blue-500";
+    const validUserStyles = validUsername ? "border-blue-500" : "border-red-600";
+    const validPasswordStyles = validPassword ? "border-blue-500" : "border-red-600";
+    const validRolesStyles = roles.length ? "border-blue-500" : "border-red-600";
 
     return (
-        <>
+        <div className="p-2">
             <p className={errorStyles}>{error?.data?.message}</p>
 
-            <form className="" onSubmit={onSaveUserClicked}>
-                <div>
-                    <h2>New User</h2>
+            <form className="flex flex-col" onSubmit={onSaveUserClicked}>
+                <header className="flex justify-between items-center">
+                    <h2 className="text-xl font-semibold">New User</h2>
                     <div>
                         <Button disabled={!canSave}>Save</Button>
                     </div>
-                </div>
+                </header>
 
                 <label htmlFor="username">
                     Username: <span>[3-20 letters]</span>
@@ -122,6 +122,6 @@ export default function NewUserForm() {
                     {options}
                 </select>
             </form>
-        </>
+        </div>
     );
 }
