@@ -31,7 +31,7 @@ const login = asyncHandler(async (req, res) => {
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "10s" }
+    { expiresIn: "1m" }
   );
 
   const refreshToken = jwt.sign(
@@ -42,7 +42,7 @@ const login = asyncHandler(async (req, res) => {
 
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
-    secure: true,
+    // secure: true,
     sameSite: "None", // Allow cross-site cookie
     maxAge: 24 * 60 * 1000, // 1 day: same as refresh token
   });
@@ -78,7 +78,7 @@ const refresh = asyncHandler(async (req, res) => {
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "10s" }
+        { expiresIn: "1m" }
       );
 
       return res.json({ accessToken });
@@ -92,7 +92,11 @@ const refresh = asyncHandler(async (req, res) => {
 const logout = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204); // No content
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: "None",
+    // secure: true
+  });
   res.json({ message: "User has been logged out" });
 });
 
