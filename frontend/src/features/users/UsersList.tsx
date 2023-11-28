@@ -10,7 +10,11 @@ export default function UsersList() {
     isSuccess,
     isError,
     error,
-  } = useGetUsersQuery("");
+  } = useGetUsersQuery(undefined, {
+    pollingInterval: 60000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  });
 
   let content;
 
