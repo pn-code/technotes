@@ -127,8 +127,8 @@ export default function EditUserForm({ user }: EditUserFormProps) {
 
   return (
     <div className="p-2">
-      <p className={errorStyles}>{getErrorMsg(updateError)}</p>
-      <p className={errorStyles}>{getErrorMsg(deleteError)}</p>
+      <p className={errorStyles}>{updateError && getErrorMsg(updateError)}</p>
+      <p className={errorStyles}>{deleteError && getErrorMsg(deleteError)}</p>
 
       <form className="flex flex-col" onSubmit={onUpdateUserClicked}>
         <div className="flex justify-between item-center">

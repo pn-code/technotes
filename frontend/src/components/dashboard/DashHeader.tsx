@@ -3,10 +3,12 @@ import { Fingerprint, Home, StickyNote, User } from "lucide-react";
 import { useLogOutMutation } from "../../features/auth/authApiSlice";
 import Button from "../ui/Button";
 import { useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
 
 export default function DashHeader() {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+
+  const { isAdmin, isManager } = useAuth();
 
   const [logOut, { isLoading, isSuccess, isError, error }] =
     useLogOutMutation();
@@ -44,14 +46,16 @@ export default function DashHeader() {
                 <StickyNote size={18} /> Notes
               </Link>
             </li>
-            <li>
-              <Link
-                className="flex gap-1 items-center font-semibold hover:text-slate-600"
-                to="/dashboard/users"
-              >
-                <User size={18} /> Users
-              </Link>
-            </li>
+            {(isAdmin || isManager) && (
+              <li>
+                <Link
+                  className="flex gap-1 items-center font-semibold hover:text-slate-600"
+                  to="/dashboard/users"
+                >
+                  <User size={18} /> Users
+                </Link>
+              </li>
+            )}
             <li>
               <Button
                 onClick={handleLogOut}
