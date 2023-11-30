@@ -6,6 +6,7 @@ const baseQuery = fetchBaseQuery({
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as any;
+    console.log("STORE STATE: ", state);
     const token = state.auth.token;
 
     if (token) {
@@ -20,13 +21,15 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 403) {
-    console.log("Sending refresh token");
+    console.log("No token detected. Verifying refresh token.");
 
     const refreshResult = (await baseQuery(
       "/api/auth/refresh",
       api,
       extraOptions
     )) as any;
+
+    console.log("REFRESH DATA: ", refreshResult)
 
     if (refreshResult?.data) {
       api.dispatch(setCredentials({ ...refreshResult.data }));

@@ -5,7 +5,7 @@ export default function DashLayout() {
   return (
     <>
       <DashHeader />
-      <Prefetch/>
+      <Prefetch />
     </>
   );
 }

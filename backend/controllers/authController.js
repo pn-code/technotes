@@ -42,7 +42,7 @@ const login = asyncHandler(async (req, res) => {
 
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
-    // secure: true,
+    secure: true,
     sameSite: "None", // Allow cross-site cookie
     maxAge: 24 * 60 * 1000, // 1 day: same as refresh token
   });
@@ -59,11 +59,13 @@ const refresh = asyncHandler(async (req, res) => {
   if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" });
 
   const refreshToken = cookies.jwt;
+  console.log("REFRESH JWT: ", refreshToken)
 
   jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
     asyncHandler(async (error, decoded) => {
+      console.log(error)
       if (error) return res.status(403).json({ message: "Forbidden" });
 
       const foundUser = await User.findOne({ username: decoded.username });

@@ -12,56 +12,65 @@ import EditUser from "../features/users/EditUser";
 import NewUserForm from "../features/users/NewUserForm";
 import EditNote from "../features/notes/EditNote";
 import NewNote from "../features/notes/NewNote";
+import PersistLogin from "../features/auth/PersistLogin";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <RootLayout />,
-        errorElement: <ErrorPage />,
+  {
+    path: "/",
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      // Public Routes
+      {
+        path: "",
+        element: <PublicRoute />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+
+      // Private Routes
+      {
+        element: <PersistLogin />,
         children: [
-            {
+          {
+            path: "dashboard",
+            element: <DashLayout />,
+            children: [
+              // DASHBOARD INDEX
+              {
                 path: "",
-                element: <PublicRoute />,
-            },
-            {
-                path: "login",
-                element: <Login />,
-            },
-            {
-                path: "register",
-                element: <Register />,
-            },
-            {
-                path: "dashboard",
-                element: <DashLayout />,
+                element: <Welcome />,
+              },
+              // DASHBOARD NOTES
+              {
+                path: "notes",
                 children: [
-                    // DASHBOARD INDEX
-                    {
-                        path: "",
-                        element: <Welcome />,
-                    },
-                    // DASHBOARD NOTES
-                    {
-                        path: "notes",
-                        children: [
-                            { path: "", element: <NotesList /> },
-                            { path: ":id", element: <EditNote /> },
-                            { path: "new", element: <NewNote /> },
-                        ],
-                    },
-                    // DASHBOARD USERS
-                    {
-                        path: "users",
-                        children: [
-                            { path: "", element: <UsersList /> },
-                            { path: ":id", element: <EditUser /> },
-                            { path: "new", element: <NewUserForm /> },
-                        ],
-                    },
+                  { path: "", element: <NotesList /> },
+                  { path: ":id", element: <EditNote /> },
+                  { path: "new", element: <NewNote /> },
                 ],
-            },
+              },
+              // DASHBOARD USERS
+              {
+                path: "users",
+                children: [
+                  { path: "", element: <UsersList /> },
+                  { path: ":id", element: <EditUser /> },
+                  { path: "new", element: <NewUserForm /> },
+                ],
+              },
+            ],
+          },
         ],
-    },
+      },
+    ],
+  },
 ]);
 
 export default router;
