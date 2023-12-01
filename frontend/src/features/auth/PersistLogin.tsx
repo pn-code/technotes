@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentToken } from "./authSlice";
 import { useRefreshMutation } from "./authApiSlice";
 import { Link, Outlet } from "react-router-dom";
+import Button from "../../components/ui/Button";
 
 export default function PersistLogin() {
   const [persist] = usePersist();
@@ -42,10 +43,27 @@ export default function PersistLogin() {
     const errorObj = error as any;
     content = (
       <>
-        <p className="text-red-600 bg-slate-200">
+        <p className="font-semibold text-red-600 p-2 w-full bg-slate-200">
           Error: {errorObj?.data?.message}
         </p>
-        <Link to="/login">Click here to relogin.</Link>
+        <div className="w-full h-[60vh] flex justify-center items-center flex-col gap-8">
+          <h2 className="text-red-600 text-lg font-semibold">
+            Error: {errorObj?.data?.message}
+          </h2>
+          <p className="text-slate-800 tracking-wide">
+            You are not authorized to view this page. Please login to continue.
+          </p>
+
+          <div className="flex flex-col gap-4 md:flex-row">
+            <Link to="/">
+              <Button>Return Home</Button>
+            </Link>
+
+            <Link to="/login">
+              <Button>Employee Login</Button>
+            </Link>
+          </div>
+        </div>
       </>
     );
   } else if (isSuccess && trueSuccess) {

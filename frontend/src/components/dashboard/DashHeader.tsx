@@ -8,7 +8,7 @@ import useAuth from "../../hooks/useAuth";
 export default function DashHeader() {
   const navigate = useNavigate();
 
-  const { isAdmin, isManager } = useAuth();
+  const { isAdmin, isManager, status } = useAuth();
 
   const [logOut, { isLoading, isSuccess, isError, error }] =
     useLogOutMutation();
@@ -23,7 +23,12 @@ export default function DashHeader() {
 
   const errorObj = error as any;
 
-  if (isError) return <p>Error: {errorObj?.data?.message}</p>;
+  if (isError)
+    return (
+      <p className="text-lg font-semibold text-red-600 p-2 w-full">
+        Error: {errorObj?.data?.message}
+      </p>
+    );
 
   return (
     <header className="px-2">
@@ -38,14 +43,16 @@ export default function DashHeader() {
         </h1>
         <nav>
           <ul className="flex gap-8">
-            <li>
-              <Link
-                className="flex gap-1 items-center font-semibold hover:text-slate-600"
-                to="/dashboard/notes"
-              >
-                <StickyNote size={18} /> Notes
-              </Link>
-            </li>
+            {
+              <li>
+                <Link
+                  className="flex gap-1 items-center font-semibold hover:text-slate-600"
+                  to="/dashboard/notes"
+                >
+                  <StickyNote size={18} /> Notes
+                </Link>
+              </li>
+            }
             {(isAdmin || isManager) && (
               <li>
                 <Link
